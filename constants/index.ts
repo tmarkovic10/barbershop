@@ -23,3 +23,30 @@ export const services = [
     iconDark: "/assets/icons/hair-beard-dark.svg",
   },
 ];
+
+export const navLinks = [
+  {
+    id: 0,
+    label: "Profil",
+    iconLight: "/assets/icons/hairstyle-light.svg",
+    iconDark: "/assets/icons/hairstyle-dark.svg",
+    dis: "-translate-x-36",
+    linkTo: "/my-profile",
+  },
+  {
+    id: 1,
+    label: "Rezervacije",
+    iconLight: "/assets/icons/hairstyle-light.svg",
+    iconDark: "/assets/icons/hairstyle-dark.svg",
+    dis: "-translate-x-1",
+    linkTo: "/add-reservation",
+  },
+  {
+    id: 2,
+    label: "Forma",
+    iconLight: "/assets/icons/hairstyle-light.svg",
+    iconDark: "/assets/icons/hairstyle-dark.svg",
+    dis: "translate-x-36",
+    linkTo: "/add-reservation",
+  },
+];
