@@ -14,7 +14,7 @@ const Navbar = () => {
           height={50}
           alt="Barber's"
         />
-        <p className="h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900">
+        <p className="h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900 max-sm:hidden">
           Barber<span className="text-primary-500">&apos;s</span>
         </p>
       </Link>

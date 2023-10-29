@@ -17,7 +17,7 @@ const Reservation = () => {
   const { mode } = useTheme();
   return (
     <>
-      <div className="flex-center gap-8">
+      <div className="flex-center flex-col gap-8 sm:flex-row">
         <InputCard>
           <p className="paragraph-regular text-dark500_light700">
             Select an employee
@@ -56,9 +56,10 @@ const Reservation = () => {
                       src={`${
                         mode === "light" ? item.iconLight : item.iconDark
                       }`}
-                      height={27}
-                      width={27}
+                      height={35}
+                      width={35}
                       alt={item.value}
+                      className="background-light800_dark300 flex-center rounded-full p-1"
                     />
                     <p className="text-dark500_light700">{item.label}</p>
                   </div>

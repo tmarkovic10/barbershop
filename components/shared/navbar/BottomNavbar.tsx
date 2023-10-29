@@ -3,16 +3,27 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTheme } from "@/context/ThemeProvider";
 import { navLinks } from "@/constants";
 
 const BottomNavbar = () => {
   const [active, setActive] = useState(1);
+  const { mode } = useTheme();
+  let transition = "";
+
+  if (active === 0) {
+    transition = "-translate-x-40";
+  } else if (active === 1) {
+    transition = "-translate-x-5";
+  } else {
+    transition = "translate-x-36";
+  }
   return (
-    <nav className="shadow-light100_darknone background-light900_dark200 light-border flex-center fixed inset-x-0 bottom-9 mx-auto max-h-[4rem] rounded-xl border sm:max-w-md">
+    <nav className="shadow-light100_darknone background-light900_dark200 light-border sm:flex-center fixed inset-x-0 bottom-9 mx-auto hidden max-h-[4rem] max-w-md rounded-xl border">
       <ul className="relative flex justify-center gap-[4.3rem]">
         <span
-          className={`absolute ${navLinks[active].dis} ${
-            navLinks[active].id === 0 && "mr-2"
+          className={`absolute ${transition} ${active === 0 && "mr-3"} ${
+            active === 2 && "-mr-1"
           } primary-gradient -top-5 z-[-2] h-16 w-16 rounded-full`}
         ></span>
         {navLinks.map((item) => (
@@ -28,7 +39,7 @@ const BottomNavbar = () => {
                 }`}
               >
                 <Image
-                  src={item.iconLight}
+                  src={mode === "light" ? item.iconLight : item.iconDark}
                   height={25}
                   width={25}
                   alt="nav icon"
