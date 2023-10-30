@@ -11,10 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { services } from "@/constants";
-import { useTheme } from "@/context/ThemeProvider";
 
 const Reservation = () => {
-  const { mode } = useTheme();
   return (
     <>
       <div className="flex-center flex-col gap-8 sm:flex-row">
@@ -52,15 +50,15 @@ const Reservation = () => {
               {services.map((item) => (
                 <SelectItem value={item.value} key={item.value}>
                   <div className="flex items-center gap-5">
-                    <Image
-                      src={`${
-                        mode === "light" ? item.iconLight : item.iconDark
-                      }`}
-                      height={35}
-                      width={35}
-                      alt={item.value}
-                      className="background-light800_dark300 flex-center rounded-full p-1"
-                    />
+                    <div className="background-light800_dark300 flex-center rounded-full p-1">
+                      <Image
+                        src={item.icon}
+                        height={27}
+                        width={27}
+                        alt={item.value}
+                        className="invert-colors"
+                      />
+                    </div>
                     <p className="text-dark500_light700">{item.label}</p>
                   </div>
                 </SelectItem>

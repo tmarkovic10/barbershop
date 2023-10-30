@@ -7,20 +7,17 @@ export const services = [
   {
     value: "šišanje",
     label: "Šišanje",
-    iconLight: "/assets/icons/hairstyle-light.svg",
-    iconDark: "/assets/icons/hairstyle-dark.svg",
+    icon: "/assets/icons/hairstyle.svg",
   },
   {
     value: "uređivanje brade",
     label: "Uređivanje brade",
-    iconLight: "/assets/icons/beard-light.svg",
-    iconDark: "/assets/icons/beard-dark.svg",
+    icon: "/assets/icons/beard.svg",
   },
   {
     value: "šišanje i brada",
     label: "Šišanje & uređivanje brade",
-    iconLight: "/assets/icons/hair-beard-light.svg",
-    iconDark: "/assets/icons/hair-beard-dark.svg",
+    icon: "/assets/icons/hair-beard.svg",
   },
 ];
 
@@ -28,22 +25,19 @@ export const navLinks = [
   {
     id: 0,
     label: "Profil",
-    iconLight: "/assets/icons/profile-light.svg",
-    iconDark: "/assets/icons/profile-dark.svg",
-    linkTo: "/my-profile",
+    icon: "/assets/icons/profile.svg",
+    route: "/my-profile",
   },
   {
     id: 1,
-    label: "Rezervirajte",
-    iconLight: "/assets/icons/add-light.svg",
-    iconDark: "/assets/icons/add-dark.svg",
-    linkTo: "/add-reservation",
+    label: "Rezerviraj odmah",
+    icon: "/assets/icons/add.svg",
+    route: "/add-reservation",
   },
   {
     id: 2,
     label: "Rezervacije",
-    iconLight: "/assets/icons/list-light.svg",
-    iconDark: "/assets/icons/list-dark.svg",
-    linkTo: "/add-reservation",
+    icon: "/assets/icons/list.svg",
+    route: "/add-reservation",
   },
 ];
