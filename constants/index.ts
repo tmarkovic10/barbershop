@@ -38,6 +38,6 @@ export const navLinks = [
     id: 2,
     label: "Rezervacije",
     icon: "/assets/icons/list.svg",
-    route: "/add-reservation",
+    route: "/my-reservations",
   },
 ];

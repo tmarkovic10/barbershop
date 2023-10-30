@@ -11,8 +11,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { services } from "@/constants";
+import { getDatesInRange } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 const Reservation = () => {
+  const today = new Date();
+  const dateRange = getDatesInRange(today);
+  const active = "02/11";
+
   return (
     <>
       <div className="flex-center flex-col gap-8 sm:flex-row">
@@ -66,6 +73,30 @@ const Reservation = () => {
             </SelectContent>
           </Select>
         </InputCard>
+      </div>
+
+      <div className="flex-center shadow-light100_darknone background-light900_dark200 light-border mt-8 w-full flex-col overflow-x-auto rounded-lg border p-4">
+        <p className="paragraph-regular text-dark500_light700">
+          Odaberite datum
+        </p>
+        <ScrollArea className="flex-center w-full whitespace-nowrap pt-6">
+          <div className="flex-center gap-6">
+            {dateRange.map((item) => (
+              <Button
+                key={item}
+                onClick={() => {}}
+                className={`body-medium rounded-lg px-6 py-3 shadow-none ${
+                  active === item
+                    ? "bg-primary-100 text-primary-500"
+                    : "bg-light-800 text-light-500"
+                }`}
+              >
+                {item}
+              </Button>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </>
   );
