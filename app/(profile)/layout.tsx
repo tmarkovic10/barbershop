@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "@/components/shared/navbar/Navbar";
 import BottomNavbar from "@/components/shared/navbar/BottomNavbar";
-// import Footer from "@/components/shared/footer/Footer";
+import Footer from "@/components/shared/footer/Footer";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="mx-auto w-full max-w-5xl">{children}</div>
       </section>
       <BottomNavbar />
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 };

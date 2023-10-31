@@ -3,6 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import InputCard from "../cards/InputCard";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import * as z from "zod";
 import {
   Select,
   SelectContent,
@@ -10,95 +17,212 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { services } from "@/constants";
-import { getDatesInRange } from "@/lib/utils";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { availableTimes, services } from "@/constants";
 import { Button } from "../ui/button";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { ReservationSchema } from "@/lib/validation";
 
 const Reservation = () => {
   const today = new Date();
-  const dateRange = getDatesInRange(today);
-  const active = "02/11";
+  const threeMonthsFromToday = new Date(today);
+  threeMonthsFromToday.setMonth(today.getMonth() + 3);
+  const form = useForm<z.infer<typeof ReservationSchema>>({
+    resolver: zodResolver(ReservationSchema),
+    defaultValues: {
+      employee: "",
+      service: "",
+      date: new Date(),
+      time: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof ReservationSchema>) {
+    console.log(values);
+  }
 
   return (
-    <>
-      <div className="flex-center flex-col gap-8 sm:flex-row">
-        <InputCard>
-          <p className="paragraph-regular text-dark500_light700">
-            Select an employee
-          </p>
-          <Select>
-            <SelectTrigger className="body-regular light-border background-light800_dark300 text-light400_light500 border px-5 py-2.5">
-              <SelectValue placeholder="Zaposlenik" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light" className="text-dark500_light700">
-                Light
-              </SelectItem>
-              <SelectItem value="light" className="text-dark500_light700">
-                Dark
-              </SelectItem>
-              <SelectItem value="light" className="text-dark500_light700">
-                System
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </InputCard>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="flex-center flex-col gap-8 sm:flex-row">
+          <FormField
+            control={form.control}
+            name="employee"
+            render={({ field }) => (
+              <InputCard>
+                <FormItem>
+                  <FormLabel className="paragraph-regular text-dark500_light700">
+                    Odaberite zaposlenika
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="body-regular light-border background-light800_dark300 text-light400_light500 min-h-[48px] border px-5 py-2.5">
+                        <SelectValue placeholder="Zaposlenik" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="background-light900_dark200">
+                      <SelectItem value="damir">Damir</SelectItem>
+                      <SelectItem value="josip">Josip</SelectItem>
+                      <SelectItem value="branko">Branko</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              </InputCard>
+            )}
+          />
 
-        <InputCard>
-          <p className="paragraph-regular text-dark500_light700">
-            Select a service
-          </p>
-          <Select>
-            <SelectTrigger className="body-regular light-border background-light800_dark300 text-light400_light500 border px-5 py-2.5">
-              <SelectValue placeholder="Usluga" />
-            </SelectTrigger>
-            <SelectContent className="mt-1">
-              {services.map((item) => (
-                <SelectItem value={item.value} key={item.value}>
-                  <div className="flex items-center gap-5">
-                    <div className="background-light800_dark300 flex-center rounded-full p-1">
-                      <Image
-                        src={item.icon}
-                        height={27}
-                        width={27}
-                        alt={item.value}
-                        className="invert-colors"
+          <FormField
+            control={form.control}
+            name="service"
+            render={({ field }) => (
+              <InputCard>
+                <FormItem>
+                  <FormLabel className="paragraph-regular text-dark500_light700">
+                    Odaberite uslugu
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="body-regular light-border background-light800_dark300 text-light400_light500 min-h-[48px] border px-5 py-2.5">
+                        <SelectValue placeholder="Usluga" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="background-light900_dark200">
+                      {services.map((item) => (
+                        <SelectItem value={item.value} key={item.value}>
+                          <div className="flex items-center gap-5">
+                            <div className="background-light800_dark300 flex-center rounded-full p-1">
+                              <Image
+                                src={item.icon}
+                                height={27}
+                                width={27}
+                                alt={item.value}
+                                className="invert-colors"
+                              />
+                            </div>
+                            <p className="text-dark500_light700">
+                              {item.label}
+                            </p>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              </InputCard>
+            )}
+          />
+        </div>
+
+        <div className="flex-center mt-8 flex-col gap-8 sm:flex-row">
+          <FormField
+            control={form.control}
+            name="date"
+            render={({ field }) => (
+              <InputCard>
+                <FormItem className="flex flex-col">
+                  <FormLabel className="paragraph-regular text-dark500_light700 mt-2">
+                    Odaberite datum
+                  </FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl className="paragraph-regular text-dark500_light700">
+                        <Button
+                          className={cn(
+                            "w-full paragraph-regular text-light400_light500 min-h-[48px] light-border border background-light800_dark300 px-5 py-2.5",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "dd/MM/yyyy")
+                          ) : (
+                            <span className="paragraph-regular text-dark500_light700">
+                              Pick a date
+                            </span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date < today || date >= threeMonthsFromToday
+                        }
+                        initialFocus
+                        className="paragraph-regular text-dark500_light700 background-light900_dark200"
                       />
-                    </div>
-                    <p className="text-dark500_light700">{item.label}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </InputCard>
-      </div>
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              </InputCard>
+            )}
+          />
 
-      <div className="flex-center shadow-light100_darknone background-light900_dark200 light-border mt-8 w-full flex-col overflow-x-auto rounded-lg border p-4">
-        <p className="paragraph-regular text-dark500_light700">
-          Odaberite datum
-        </p>
-        <ScrollArea className="flex-center w-full whitespace-nowrap pt-6">
-          <div className="flex-center gap-6">
-            {dateRange.map((item) => (
-              <Button
-                key={item}
-                onClick={() => {}}
-                className={`body-medium rounded-lg px-6 py-3 shadow-none ${
-                  active === item
-                    ? "bg-primary-100 text-primary-500"
-                    : "bg-light-800 text-light-500"
-                }`}
-              >
-                {item}
-              </Button>
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
-    </>
+          <FormField
+            control={form.control}
+            name="time"
+            render={({ field }) => (
+              <InputCard>
+                <FormItem>
+                  <FormLabel className="paragraph-regular text-dark500_light700">
+                    Odaberite vrijeme
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="body-regular light-border background-light800_dark300 text-light400_light500 min-h-[48px] border px-5 py-2.5">
+                        <SelectValue placeholder="Vrijeme" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="background-light900_dark200 max-h-[10rem] overflow-y-auto">
+                      {availableTimes.map((item) => (
+                        <SelectItem value={item} key={item}>
+                          <div className="flex items-center gap-5">
+                            <p className="text-dark500_light700">{item}</p>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              </InputCard>
+            )}
+          />
+        </div>
+
+        <div className="mt-8 flex w-full justify-start">
+          <Button className="primary-gradient min-h-[40px] w-28 px-4 py-3 text-lg text-light-900 sm:w-32">
+            Book Now
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
 
