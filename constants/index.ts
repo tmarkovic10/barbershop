@@ -24,7 +24,7 @@ export const services = [
 export const navLinks = [
   {
     id: 0,
-    label: "Profil",
+    label: "Moj Profil",
     icon: "/assets/icons/profile.svg",
     route: "/my-profile",
   },
@@ -36,7 +36,7 @@ export const navLinks = [
   },
   {
     id: 2,
-    label: "Rezervacije",
+    label: "Moje Rezervacije",
     icon: "/assets/icons/list.svg",
     route: "/my-reservations",
   },

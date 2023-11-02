@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import InputCard from "../cards/InputCard";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
+import { useRouter, usePathname } from "next/navigation";
 import * as z from "zod";
 import {
   Select,
@@ -33,8 +34,16 @@ import {
 import { availableTimes, services } from "@/constants";
 import { Button } from "../ui/button";
 import { ReservationSchema } from "@/lib/validation";
+import { createReservation } from "@/lib/actions/reservation.action";
 
-const Reservation = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const Reservation = ({ mongoUserId }: Props) => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const router = useRouter();
+  const pathname = usePathname();
   const today = new Date();
   const threeMonthsFromToday = new Date(today);
   threeMonthsFromToday.setMonth(today.getMonth() + 3);
@@ -48,8 +57,25 @@ const Reservation = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof ReservationSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof ReservationSchema>) {
+    setIsSubmitting(true);
+
+    try {
+      await createReservation({
+        employee: values.employee,
+        service: values.service,
+        date: values.date,
+        time: values.time,
+        author: JSON.parse(mongoUserId),
+        path: pathname,
+      });
+
+      router.push("/my-reservations");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -218,7 +244,7 @@ const Reservation = () => {
 
         <div className="mt-8 flex w-full justify-start">
           <Button className="primary-gradient min-h-[40px] w-28 px-4 py-3 text-lg text-light-900 sm:w-32">
-            Book Now
+            Rezerviraj
           </Button>
         </div>
       </form>

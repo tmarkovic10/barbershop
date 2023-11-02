@@ -3,19 +3,23 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { navLinks } from "@/constants";
 
 const BottomNavbar = () => {
   const [active, setActive] = useState(1);
+  const pathname = usePathname();
+  console.log(pathname);
   let transition = "";
 
-  if (active === 0) {
+  if (active === 0 || pathname === "/my-profile") {
     transition = "-translate-x-44";
-  } else if (active === 1) {
+  } else if (active === 1 || pathname === "/add-reservation") {
     transition = "-translate-x-0";
-  } else {
+  } else if (active === 2 || pathname === "/my-reservations") {
     transition = "translate-x-44";
   }
+
   return (
     <nav className="shadow-light100_darknone background-light900_dark200 light-border sm:flex-center fixed inset-x-0 bottom-9 mx-auto hidden max-h-[4rem] max-w-[520px] rounded-xl border">
       <ul className="relative flex justify-around gap-[2rem]">
