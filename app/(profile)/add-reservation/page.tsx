@@ -6,6 +6,7 @@ import { getUserById } from "@/lib/actions/user.action";
 
 const Page = async () => {
   const { userId } = auth();
+  console.log("USER ID: ", userId);
 
   if (!userId) redirect("/sign-in");
 
