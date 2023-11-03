@@ -3,7 +3,11 @@
 import Reservation from "@/database/reservation.model";
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
-import { CreateReservationParams, GetReservationsParams } from "./shared.types";
+import {
+  CreateReservationParams,
+  GetReservationsParams,
+  GetUserReservationsParams,
+} from "./shared.types";
 import User from "@/database/user.model";
 
 export async function createReservation(params: CreateReservationParams) {
@@ -29,12 +33,31 @@ export async function createReservation(params: CreateReservationParams) {
   }
 }
 
-export async function getUserReservations(params: GetReservationsParams) {
-  // I will here get All Reservations
+export async function getAllReservations(params: GetReservationsParams) {
   try {
     connectToDatabase();
 
     const reservations = await Reservation.find({})
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .sort({ createdAt: -1 });
+
+    return { reservations };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserReservations(params: GetUserReservationsParams) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const reservations = await Reservation.find({ author: userId })
       .populate({
         path: "author",
         model: User,

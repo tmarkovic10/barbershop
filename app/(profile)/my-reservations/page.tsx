@@ -1,14 +1,22 @@
 import React from "react";
+import { auth } from "@clerk/nextjs";
 import { getUserReservations } from "@/lib/actions/reservation.action";
 import ReservationCard from "@/components/cards/ReservationCard";
+import { getUserById } from "@/lib/actions/user.action";
 
 const Page = async () => {
-  const result = await getUserReservations({});
+  const { userId: clerkId } = auth();
+  let mongoUser;
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
+
+  const result = await getUserReservations({ userId: mongoUser._id });
 
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">Moje Rezervacije</h1>
-      <div className="flex flex-wrap gap-12">
+      <div className="mt-9 flex flex-wrap gap-6 sm:gap-12">
         {result.reservations.length > 0
           ? result.reservations.map((reservation) => (
               <ReservationCard

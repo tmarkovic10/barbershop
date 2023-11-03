@@ -7,8 +7,6 @@ export interface GetReservationsParams {
   filter?: string;
 }
 
-export interface GetUserReservationsParams {}
-
 export interface CreateReservationParams {
   employee: string;
   service: string;
@@ -33,4 +31,8 @@ export interface UpdateUserParams {
 
 export interface DeleteUserParams {
   clerkId: string;
+}
+
+export interface GetUserReservationsParams {
+  userId: string;
 }
