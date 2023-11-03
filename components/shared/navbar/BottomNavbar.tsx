@@ -9,7 +9,6 @@ import { navLinks } from "@/constants";
 const BottomNavbar = () => {
   const [active, setActive] = useState(1);
   const pathname = usePathname();
-  console.log(pathname);
   let transition = "";
 
   if (active === 0 || pathname === "/my-profile") {
