@@ -42,6 +42,7 @@ interface Props {
 
 const Reservation = ({ mongoUserId }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  console.log(isSubmitting);
   const router = useRouter();
   const pathname = usePathname();
   const today = new Date();
