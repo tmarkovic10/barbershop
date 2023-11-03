@@ -1,12 +1,11 @@
 import React from "react";
 import Reservation from "@/components/forms/Reservation";
-// import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { getUserById } from "@/lib/actions/user.action";
 
 const Page = async () => {
-  // const { userId } = auth();
-  const userId = "john_doe";
+  const { userId } = auth();
 
   if (!userId) redirect("/sign-in");
 
