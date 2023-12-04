@@ -5,6 +5,7 @@ import UserCard from "@/components/cards/UserCard";
 const Page = async () => {
   const { userId: clerkId } = auth();
   const mongoUser = await getUserById({ userId: clerkId });
+
   return (
     <div className="flex-center">
       <UserCard user={mongoUser} />
