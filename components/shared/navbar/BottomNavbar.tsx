@@ -3,24 +3,24 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-// import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { navLinks } from "@/constants";
 
 const BottomNavbar = () => {
   const [active, setActive] = useState(1);
   let transition = "";
-  // const pathname = usePathname();
+  const pathname = usePathname();
 
-  // useEffect(() => {
-  //   if (pathname === "/my-profile") {
-  //     setTransition("-translate-x-44");
-  //   } else if (pathname === "/add-reservation") {
-  //     setTransition("-translate-x-0");
-  //   } else if (pathname === "/my-reservations") {
-  //     setTransition("translate-x-44");
-  //   }
-  //   console.log("Render");
-  // }, [pathname, active]);
+  useEffect(() => {
+    if (pathname === "/my-profile") {
+      setActive(0);
+    } else if (pathname === "/add-reservation") {
+      setActive(1);
+    } else if (pathname === "/my-reservations") {
+      setActive(2);
+    }
+    console.log("Render");
+  }, [pathname, active]);
 
   if (active === 0) {
     transition = "-translate-x-44";

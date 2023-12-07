@@ -69,14 +69,16 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
     },
   });
   const { watch } = form;
+  const dateValue = watch("date");
+  console.log(dateValue);
 
   useEffect(() => {
-    const subscription = watch((value) => {
+    if (dateValue) {
       const bookedTimeForDate = dateAndTime
         .filter(
           (appointment) =>
             format(appointment.date, "dd/MM/yyyy") ===
-            format(value.date!, "dd/MM/yyyy")
+            format(dateValue, "dd/MM/yyyy")
         )
         .map((appointment) => appointment.time);
 
@@ -84,9 +86,26 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
         (time) => !bookedTimeForDate.includes(time)
       );
       setavailableTimesForDates(availableTimesForDate);
-    });
-    return () => subscription.unsubscribe();
-  }, [watch, dateAndTime]);
+    }
+  }, [dateValue, dateAndTime]);
+
+  // useEffect(() => {
+  //   const subscription = watch((value) => {
+  //     const bookedTimeForDate = dateAndTime
+  //       .filter(
+  //         (appointment) =>
+  //           format(appointment.date, "dd/MM/yyyy") ===
+  //           format(value.date!, "dd/MM/yyyy")
+  //       )
+  //       .map((appointment) => appointment.time);
+
+  //     const availableTimesForDate = availableTimes.filter(
+  //       (time) => !bookedTimeForDate.includes(time)
+  //     );
+  //     setavailableTimesForDates(availableTimesForDate);
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, [watch, dateAndTime]);
 
   async function onSubmit(values: z.infer<typeof ReservationSchema>) {
     setIsSubmitting(true);
