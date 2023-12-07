@@ -34,8 +34,19 @@ const BottomNavbar = () => {
     <nav className="shadow-light100_darknone background-light900_dark200 light-border sm:flex-center fixed inset-x-0 bottom-9 mx-auto hidden max-h-[4rem] max-w-[520px] rounded-xl border">
       <ul className="relative flex justify-around gap-[2rem]">
         <span
-          className={`absolute ${transition} ${active === 0 && "mr-2.5"} ${
-            active === 2 && "-mr-2"
+          className={`absolute ${transition} ${
+            active === 0
+              ? "mr-2.5 translate-y-0.5 opacity-100 duration-700"
+              : "translate-y-10 opacity-0"
+          } ${
+            active === 1
+              ? "translate-y-0.5 opacity-100 duration-700"
+              : "translate-y-10 opacity-0"
+          } 
+          ${
+            active === 2
+              ? "-mr-2 translate-y-0.5 opacity-100 duration-700"
+              : "translate-y-10 opacity-0"
           } primary-gradient -top-5 z-[-2] h-16 w-16 rounded-full`}
         ></span>
         {navLinks.map((item) => (
