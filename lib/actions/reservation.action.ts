@@ -64,7 +64,7 @@ export async function getUserReservations(params: GetUserReservationsParams) {
       })
       .sort({ createdAt: -1 });
 
-    return { reservations };
+    return reservations;
   } catch (error) {
     console.log(error);
     throw error;

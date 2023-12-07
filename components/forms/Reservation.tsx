@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import InputCard from "../cards/InputCard";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,16 +36,26 @@ import { Button } from "../ui/button";
 import { ReservationSchema } from "@/lib/validation";
 import { createReservation } from "@/lib/actions/reservation.action";
 
-interface Props {
-  mongoUserId: string;
+interface Appointment {
+  date: Date;
+  time: string;
 }
 
-const Reservation = ({ mongoUserId }: Props) => {
+interface Props {
+  mongoUserId: string;
+  dateAndTime: Appointment[];
+}
+
+const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
+  const [availableTimesForDates, setavailableTimesForDates] =
+    useState<string[]>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   console.log(isSubmitting);
   const router = useRouter();
   const pathname = usePathname();
   const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
   const threeMonthsFromToday = new Date(today);
   threeMonthsFromToday.setMonth(today.getMonth() + 3);
   const form = useForm<z.infer<typeof ReservationSchema>>({
@@ -53,10 +63,29 @@ const Reservation = ({ mongoUserId }: Props) => {
     defaultValues: {
       employee: "",
       service: "",
-      date: new Date(),
+      date: undefined,
       time: "",
     },
   });
+  const { watch } = form;
+
+  useEffect(() => {
+    const subscription = watch((value) => {
+      const bookedTimeForDate = dateAndTime
+        .filter(
+          (appointment) =>
+            format(appointment.date, "dd/MM/yyyy") ===
+            format(value.date!, "dd/MM/yyyy")
+        )
+        .map((appointment) => appointment.time);
+
+      const availableTimesForDate = availableTimes.filter(
+        (time) => !bookedTimeForDate.includes(time)
+      );
+      setavailableTimesForDates(availableTimesForDate);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, dateAndTime]);
 
   async function onSubmit(values: z.infer<typeof ReservationSchema>) {
     setIsSubmitting(true);
@@ -181,11 +210,11 @@ const Reservation = ({ mongoUserId }: Props) => {
                           {field.value ? (
                             format(field.value, "dd/MM/yyyy")
                           ) : (
-                            <span className="paragraph-regular text-dark500_light700">
-                              Pick a date
+                            <span className="body-regular light-border background-light800_dark300 text-light400_light500 min-h-[48px] border py-2.5">
+                              Odaberite datum
                             </span>
                           )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          <CalendarIcon className="text-light400_light500 ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -195,7 +224,7 @@ const Reservation = ({ mongoUserId }: Props) => {
                         selected={field.value}
                         onSelect={field.onChange}
                         disabled={(date) =>
-                          date < today || date >= threeMonthsFromToday
+                          date < yesterday || date >= threeMonthsFromToday
                         }
                         initialFocus
                         className="paragraph-regular text-dark500_light700 background-light900_dark200"
@@ -227,7 +256,7 @@ const Reservation = ({ mongoUserId }: Props) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="background-light900_dark200 max-h-[10rem] overflow-y-auto">
-                      {availableTimes.map((item) => (
+                      {availableTimesForDates?.map((item) => (
                         <SelectItem value={item} key={item}>
                           <div className="flex items-center gap-5">
                             <p className="text-dark500_light700">{item}</p>

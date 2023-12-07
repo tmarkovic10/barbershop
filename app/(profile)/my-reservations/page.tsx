@@ -17,8 +17,8 @@ const Page = async () => {
     <>
       <h1 className="h1-bold text-dark100_light900">Moje Rezervacije</h1>
       <div className="mt-9 flex flex-wrap gap-6 sm:gap-12">
-        {result.reservations.length > 0
-          ? result.reservations.map((reservation) => (
+        {result.length > 0
+          ? result.map((reservation) => (
               <ReservationCard
                 key={reservation._id}
                 _id={reservation._id}
