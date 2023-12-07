@@ -23,6 +23,13 @@ const Loading = () => {
           </div>
           <Skeleton className="h-[24px]" />
         </div>
+
+        <div className="text-center">
+          <div className="paragraph-semibold text-dark500_light700">
+            Broj rezervacija
+          </div>
+          <Skeleton className="h-[24px] w-full" />
+        </div>
       </Skeleton>
     </div>
   );

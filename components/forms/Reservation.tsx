@@ -49,6 +49,7 @@ interface Props {
 const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
   const [availableTimesForDates, setavailableTimesForDates] =
     useState<string[]>();
+  const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   console.log(isSubmitting);
   const router = useRouter();
@@ -131,9 +132,24 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="background-light900_dark200">
-                      <SelectItem value="damir">Damir</SelectItem>
-                      <SelectItem value="josip">Josip</SelectItem>
-                      <SelectItem value="branko">Branko</SelectItem>
+                      <SelectItem
+                        value="damir"
+                        className="text-dark500_light700"
+                      >
+                        Damir
+                      </SelectItem>
+                      <SelectItem
+                        value="josip"
+                        className="text-dark500_light700"
+                      >
+                        Josip
+                      </SelectItem>
+                      <SelectItem
+                        value="branko"
+                        className="text-dark500_light700"
+                      >
+                        Branko
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage className="text-red-500" />
@@ -198,7 +214,7 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                   <FormLabel className="paragraph-regular text-dark500_light700 mt-2">
                     Odaberite datum
                   </FormLabel>
-                  <Popover>
+                  <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <FormControl className="paragraph-regular text-dark500_light700">
                         <Button
@@ -222,7 +238,10 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                       <Calendar
                         mode="single"
                         selected={field.value}
-                        onSelect={field.onChange}
+                        onSelect={(date) => {
+                          field.onChange(date);
+                          setCalendarOpen(false);
+                        }}
                         disabled={(date) =>
                           date < yesterday || date >= threeMonthsFromToday
                         }

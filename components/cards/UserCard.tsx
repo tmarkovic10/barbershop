@@ -8,9 +8,10 @@ interface UserCardProps {
     picture: string;
     joinedAt: Date;
   };
+  numberOfReservations: number;
 }
 
-const UserCard = ({ user }: UserCardProps) => {
+const UserCard = ({ user, numberOfReservations }: UserCardProps) => {
   return (
     <div className="card-wrapper flex-center mt-8 w-96 flex-col gap-8 px-12 py-6">
       <Image
@@ -37,6 +38,12 @@ const UserCard = ({ user }: UserCardProps) => {
         <p className="text-light400_light500">
           {format(user.joinedAt, "dd.MM.yyyy")}
         </p>
+      </div>
+      <div className="text-center">
+        <p className="paragraph-semibold text-dark500_light700">
+          Broj rezervacija
+        </p>
+        <p className="text-light400_light500">{numberOfReservations}</p>
       </div>
     </div>
   );
