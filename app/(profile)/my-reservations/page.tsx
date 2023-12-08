@@ -15,7 +15,6 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 
   const result = await getUserReservations({
     userId: mongoUser._id,
-    searchQuery: searchParams.q,
     page: searchParams.page ? +searchParams.page : 1,
   });
 

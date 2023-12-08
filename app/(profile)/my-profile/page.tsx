@@ -9,7 +9,10 @@ const Page = async () => {
   const reservations = await getUserReservations({ userId: mongoUser._id });
   return (
     <div className="flex-center">
-      <UserCard user={mongoUser} numberOfReservations={reservations.length} />
+      <UserCard
+        user={mongoUser}
+        numberOfReservations={reservations.reservations.length}
+      />
     </div>
   );
 };

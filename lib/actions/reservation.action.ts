@@ -56,19 +56,12 @@ export async function getUserReservations(params: GetUserReservationsParams) {
   try {
     connectToDatabase();
 
-    const { userId, searchQuery, page = 1, pageSize = 9 } = params;
+    const { userId, page = 1, pageSize = 9 } = params;
 
     // Calculate the number of reservations to skip based on the page number and page size
     const skipAmount = (page - 1) * pageSize;
 
-    const query: FilterQuery<typeof Reservation> = {};
-
-    if (searchQuery) {
-      query.$or = [
-        { title: { $regex: new RegExp(searchQuery, "i") } },
-        { content: { $regex: new RegExp(searchQuery, "i") } },
-      ];
-    }
+    const query: FilterQuery<typeof Reservation> = { author: userId };
 
     const reservations = await Reservation.find({ author: userId })
       .populate({

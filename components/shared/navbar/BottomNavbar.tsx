@@ -10,6 +10,7 @@ const BottomNavbar = () => {
   const [active, setActive] = useState(1);
   let transition = "";
   const pathname = usePathname();
+  console.log(active);
 
   useEffect(() => {
     if (pathname === "/my-profile") {
@@ -19,7 +20,6 @@ const BottomNavbar = () => {
     } else if (pathname === "/my-reservations") {
       setActive(2);
     }
-    console.log("Render");
   }, [pathname, active]);
 
   if (active === 0) {
@@ -36,16 +36,16 @@ const BottomNavbar = () => {
         <span
           className={`absolute ${transition} ${
             active === 0
-              ? "mr-2.5 translate-y-1 opacity-100 duration-700"
+              ? "mr-2.5 translate-y-0.5 opacity-100 duration-700"
               : "translate-y-10 opacity-0"
           } ${
             active === 1
-              ? "translate-y-1 opacity-100 duration-700"
+              ? "translate-y-0.5 opacity-100 duration-700"
               : "translate-y-10 opacity-0"
           } 
           ${
             active === 2
-              ? "-mr-2 translate-y-1 opacity-100 duration-700"
+              ? "-mr-2 translate-y-0.5 opacity-100 duration-700"
               : "translate-y-10 opacity-0"
           } primary-gradient -top-5 z-[-2] h-16 w-16 rounded-full`}
         ></span>

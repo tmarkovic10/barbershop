@@ -43,7 +43,9 @@ const UserCard = ({ user, numberOfReservations }: UserCardProps) => {
         <p className="paragraph-semibold text-dark500_light700">
           Broj rezervacija
         </p>
-        <p className="text-light400_light500">{numberOfReservations}</p>
+        <p className="text-light400_light500">
+          {numberOfReservations > 0 ? numberOfReservations : 0}
+        </p>
       </div>
     </div>
   );

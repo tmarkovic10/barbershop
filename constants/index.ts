@@ -64,3 +64,9 @@ export const availableTimes = [
   "20:30",
   "21:00",
 ];
+
+export const positions = [
+  "mr-2.5 translate-y-1",
+  "translate-y-1",
+  "-mr-2 translate-y-1",
+];
