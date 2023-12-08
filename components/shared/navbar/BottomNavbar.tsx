@@ -35,19 +35,10 @@ const BottomNavbar = () => {
       <ul className="relative flex justify-around gap-[2rem]">
         <span
           className={`absolute ${transition} ${
-            active === 0
-              ? "mr-2.5 translate-y-0.5 opacity-100 duration-700"
-              : "translate-y-10 opacity-0"
-          } ${
-            active === 1
-              ? "translate-y-0.5 opacity-100 duration-700"
-              : "translate-y-10 opacity-0"
-          } 
-          ${
-            active === 2
-              ? "-mr-2 translate-y-0.5 opacity-100 duration-700"
-              : "translate-y-10 opacity-0"
-          } primary-gradient -top-5 z-[-2] h-16 w-16 rounded-full`}
+            active === 0 ? "mr-2.5" : active === 2 ? "-mr-2" : ""
+          } translate-y-0.5 ${
+            active !== undefined ? "opacity-100" : "opacity-0"
+          } primary-gradient -top-5 z-[-2] h-16 w-16 rounded-full duration-700`}
         ></span>
         {navLinks.map((item) => (
           <li
