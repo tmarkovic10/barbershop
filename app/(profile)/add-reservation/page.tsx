@@ -13,7 +13,7 @@ const Page = async () => {
   const mongoUser = await getUserById({ userId });
 
   const reservations = await getUserReservations({ userId: mongoUser._id });
-  const dateAndTime = reservations.map((item) => ({
+  const dateAndTime = reservations.reservations.map((item) => ({
     date: item.date,
     time: item.time,
   }));

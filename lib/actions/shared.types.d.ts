@@ -35,4 +35,7 @@ export interface DeleteUserParams {
 
 export interface GetUserReservationsParams {
   userId: string;
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
 }

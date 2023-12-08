@@ -9,6 +9,7 @@ import {
   GetUserReservationsParams,
 } from "./shared.types";
 import User from "@/database/user.model";
+import { FilterQuery } from "mongoose";
 
 export async function createReservation(params: CreateReservationParams) {
   try {
@@ -55,16 +56,34 @@ export async function getUserReservations(params: GetUserReservationsParams) {
   try {
     connectToDatabase();
 
-    const { userId } = params;
+    const { userId, searchQuery, page = 1, pageSize = 9 } = params;
+
+    // Calculate the number of reservations to skip based on the page number and page size
+    const skipAmount = (page - 1) * pageSize;
+
+    const query: FilterQuery<typeof Reservation> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
 
     const reservations = await Reservation.find({ author: userId })
       .populate({
         path: "author",
         model: User,
       })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort({ createdAt: -1 });
 
-    return reservations;
+    const totalReservations = await Reservation.countDocuments(query);
+
+    const isNext = totalReservations > skipAmount + reservations.length;
+
+    return { reservations, isNext };
   } catch (error) {
     console.log(error);
     throw error;
