@@ -44,9 +44,9 @@ export const navLinks = [
 
 export const availableTimes = [
   "08:00",
-  "08.30",
+  "08:30",
   "09:00",
-  "09.30",
+  "09:30",
   "10:00",
   "10:30",
   "11:00",
@@ -69,4 +69,11 @@ export const positions = [
   "mr-2.5 translate-y-1",
   "translate-y-1",
   "-mr-2 translate-y-1",
+];
+
+export const barbers = [
+  {
+    value: "damir",
+    label: "Damir",
+  },
 ];

@@ -21,7 +21,7 @@ const ReservationCard = ({
   time,
 }: ReservationCardProps) => {
   return (
-    <div className="card-wrapper flex w-full gap-10 rounded-[10px] p-6 sm:max-w-[300px]">
+    <div className="card-wrapper flex w-full justify-around gap-10 rounded-[10px] p-6 sm:max-w-[300px] sm:justify-normal">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <p className="paragraph-semibold text-dark500_light700">Zaposlenik</p>

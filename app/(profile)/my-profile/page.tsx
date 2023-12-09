@@ -11,7 +11,7 @@ const Page = async () => {
     <div className="flex-center">
       <UserCard
         user={mongoUser}
-        numberOfReservations={reservations.reservations.length}
+        numberOfReservations={reservations.totalReservations}
       />
     </div>
   );

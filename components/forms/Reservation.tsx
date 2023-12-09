@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, threeMonthsFromToday, yesterday } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { useRouter, usePathname } from "next/navigation";
 import * as z from "zod";
@@ -31,7 +31,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { availableTimes, services } from "@/constants";
+import { availableTimes, services, barbers } from "@/constants";
 import { Button } from "../ui/button";
 import { ReservationSchema } from "@/lib/validation";
 import { createReservation } from "@/lib/actions/reservation.action";
@@ -54,11 +54,6 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
   console.log(isSubmitting);
   const router = useRouter();
   const pathname = usePathname();
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  const threeMonthsFromToday = new Date(today);
-  threeMonthsFromToday.setMonth(today.getMonth() + 3);
   const form = useForm<z.infer<typeof ReservationSchema>>({
     resolver: zodResolver(ReservationSchema),
     defaultValues: {
@@ -70,7 +65,6 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
   });
   const { watch } = form;
   const dateValue = watch("date");
-  console.log(dateValue);
 
   useEffect(() => {
     if (dateValue) {
@@ -88,24 +82,6 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
       setavailableTimesForDates(availableTimesForDate);
     }
   }, [dateValue, dateAndTime]);
-
-  // useEffect(() => {
-  //   const subscription = watch((value) => {
-  //     const bookedTimeForDate = dateAndTime
-  //       .filter(
-  //         (appointment) =>
-  //           format(appointment.date, "dd/MM/yyyy") ===
-  //           format(value.date!, "dd/MM/yyyy")
-  //       )
-  //       .map((appointment) => appointment.time);
-
-  //     const availableTimesForDate = availableTimes.filter(
-  //       (time) => !bookedTimeForDate.includes(time)
-  //     );
-  //     setavailableTimesForDates(availableTimesForDate);
-  //   });
-  //   return () => subscription.unsubscribe();
-  // }, [watch, dateAndTime]);
 
   async function onSubmit(values: z.infer<typeof ReservationSchema>) {
     setIsSubmitting(true);
@@ -151,24 +127,15 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="background-light900_dark200">
-                      <SelectItem
-                        value="damir"
-                        className="text-dark500_light700"
-                      >
-                        Damir
-                      </SelectItem>
-                      <SelectItem
-                        value="josip"
-                        className="text-dark500_light700"
-                      >
-                        Josip
-                      </SelectItem>
-                      <SelectItem
-                        value="branko"
-                        className="text-dark500_light700"
-                      >
-                        Branko
-                      </SelectItem>
+                      {barbers.map((barber) => (
+                        <SelectItem
+                          value={barber.value}
+                          className="text-dark500_light700 cursor-pointer hover:bg-light-800 dark:hover:bg-dark-300"
+                          key={barber.value}
+                        >
+                          {barber.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage className="text-red-500" />
@@ -197,7 +164,11 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                     </FormControl>
                     <SelectContent className="background-light900_dark200">
                       {services.map((item) => (
-                        <SelectItem value={item.value} key={item.value}>
+                        <SelectItem
+                          value={item.value}
+                          key={item.value}
+                          className="cursor-pointer hover:bg-light-800 dark:hover:bg-dark-300"
+                        >
                           <div className="flex items-center gap-5">
                             <div className="background-light800_dark300 flex-center rounded-full p-1">
                               <Image
@@ -269,7 +240,7 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               </InputCard>
             )}
@@ -295,7 +266,11 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                     </FormControl>
                     <SelectContent className="background-light900_dark200 max-h-[10rem] overflow-y-auto">
                       {availableTimesForDates?.map((item) => (
-                        <SelectItem value={item} key={item}>
+                        <SelectItem
+                          value={item}
+                          key={item}
+                          className="cursor-pointer hover:bg-light-800 dark:hover:bg-dark-300"
+                        >
                           <div className="flex items-center gap-5">
                             <p className="text-dark500_light700">{item}</p>
                           </div>

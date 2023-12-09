@@ -25,3 +25,8 @@ export const formUrlQuery = ({ params, key, value }: UrlQueryParams) => {
     { skipNull: true }
   );
 };
+
+export const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+export const threeMonthsFromToday = new Date(
+  new Date().setMonth(new Date().getMonth() + 3)
+);
