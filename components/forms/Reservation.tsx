@@ -51,7 +51,6 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
     useState<string[]>();
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  console.log(isSubmitting);
   const router = useRouter();
   const pathname = usePathname();
   const form = useForm<z.infer<typeof ReservationSchema>>({
@@ -286,8 +285,11 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
         </div>
 
         <div className="mt-8 flex w-full justify-start">
-          <Button className="primary-gradient min-h-[40px] w-28 px-4 py-3 text-lg text-light-900 sm:w-32">
-            Rezerviraj
+          <Button
+            disabled={isSubmitting}
+            className="primary-gradient min-h-[40px] w-28 px-4 py-3 text-lg text-light-900 sm:w-32"
+          >
+            {isSubmitting ? "Rezerviranje..." : "Rezervirajte"}
           </Button>
         </div>
       </form>

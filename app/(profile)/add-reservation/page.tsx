@@ -26,7 +26,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
       <h1 className="h1-bold text-dark100_light900">Book an appointment</h1>
       <div className="mt-9">
         <Reservation
-          mongoUserId={JSON.stringify(mongoUser._id)}
+          mongoUserId={JSON.stringify(mongoUser?._id)}
           dateAndTime={dateAndTime}
         />
       </div>
