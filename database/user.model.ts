@@ -4,6 +4,7 @@ export interface IUser extends Document {
   clerkId: string;
   name: string;
   email: string;
+  admin?: boolean;
   password?: string;
   picture: string;
   joinedAt: Date;

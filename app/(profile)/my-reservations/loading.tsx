@@ -10,7 +10,7 @@ const Loading = async () => {
     mongoUser = await getUserById({ userId: clerkId });
   }
 
-  const result = await getUserReservations({ userId: mongoUser._id });
+  const result = await getUserReservations({ userId: mongoUser?._id });
 
   return (
     <>

@@ -45,7 +45,7 @@ export async function getAllReservations(params: GetReservationsParams) {
 
     const query: FilterQuery<typeof Reservation> = {};
 
-    const reservations = await Reservation.find({})
+    const reservations = await Reservation.find(query)
       .populate({
         path: "author",
         model: User,

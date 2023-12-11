@@ -30,7 +30,7 @@ export default function Home() {
           Discover the art of timeless grooming at our barbershop. Experience
           skilled craftsmanship and leave with a style that defines you.
         </p>
-        <Link href="/add-reservation">
+        <Link href="/sign-in">
           <Button className="primary-gradient min-h-[46px] w-32 px-4 py-3 text-lg text-light-900 sm:w-40">
             Book Now
           </Button>

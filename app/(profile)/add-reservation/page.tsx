@@ -13,6 +13,8 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 
   const mongoUser = await getUserById({ userId });
 
+  if (mongoUser?.admin) redirect("/admin");
+
   const reservations = await getAllReservations({
     page: searchParams.page ? +searchParams.page : 1,
   });
@@ -23,13 +25,17 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">Book an appointment</h1>
-      <div className="mt-9">
-        <Reservation
-          mongoUserId={JSON.stringify(mongoUser._id)}
-          dateAndTime={dateAndTime}
-        />
-      </div>
+      {!mongoUser?.admin && (
+        <>
+          <h1 className="h1-bold text-dark100_light900">Book an appointment</h1>
+          <div className="mt-9">
+            <Reservation
+              mongoUserId={JSON.stringify(mongoUser._id)}
+              dateAndTime={dateAndTime}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 };
