@@ -21,6 +21,7 @@ export interface CreateUserParams {
   name: string;
   email: string;
   picture: string;
+  admin: boolean;
 }
 
 export interface UpdateUserParams {

@@ -32,7 +32,6 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
               service={reservation.service}
               date={reservation.date}
               time={reservation.time}
-              author={reservation.author}
             />
           ))
         ) : (

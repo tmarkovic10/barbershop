@@ -23,10 +23,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  admin: {
-    type: Boolean,
-    default: false,
-  },
   password: {
     type: String,
   },
@@ -37,6 +33,10 @@ const UserSchema = new Schema({
   joinedAt: {
     type: Date,
     default: Date.now,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
   },
 });
 

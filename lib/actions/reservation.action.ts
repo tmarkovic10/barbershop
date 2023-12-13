@@ -38,27 +38,14 @@ export async function getAllReservations(params: GetReservationsParams) {
   try {
     connectToDatabase();
 
-    const { page = 1, pageSize = 9 } = params;
-
-    // Calculate the number of reservations to skip based on the page number and page size
-    const skipAmount = (page - 1) * pageSize;
-
-    const query: FilterQuery<typeof Reservation> = {};
-
     const reservations = await Reservation.find({})
       .populate({
         path: "author",
         model: User,
       })
-      .skip(skipAmount)
-      .limit(pageSize)
       .sort({ createdAt: -1 });
 
-    const totalReservations = await Reservation.countDocuments(query);
-
-    const isNext = totalReservations > skipAmount + reservations.length;
-
-    return { reservations, isNext };
+    return { reservations };
   } catch (error) {
     console.log(error);
     throw error;
