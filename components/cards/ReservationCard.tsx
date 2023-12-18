@@ -23,7 +23,7 @@ const ReservationCard = ({
   author,
 }: ReservationCardProps) => {
   return (
-    <div className="card-wrapper flex w-full flex-col gap-6 rounded-[10px] px-2 py-6 sm:max-w-[300px] sm:justify-normal">
+    <div className="card-wrapper light-border flex w-full flex-col gap-6 rounded-[10px] border px-2 py-6 sm:max-w-[300px] sm:justify-normal">
       {author && (
         <div className="flex-center gap-3">
           <p className="paragraph-semibold text-dark500_light700">Gost</p>

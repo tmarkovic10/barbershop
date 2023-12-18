@@ -13,7 +13,7 @@ interface UserCardProps {
 
 const UserCard = ({ user, numberOfReservations }: UserCardProps) => {
   return (
-    <div className="card-wrapper flex-center mt-8 w-96 flex-col gap-8 px-12 py-6">
+    <div className="card-wrapper light-border flex-center mt-8 w-96 flex-col gap-8 rounded-[10px] border px-12 py-6">
       <Image
         src={user.picture}
         alt="user profile picture"

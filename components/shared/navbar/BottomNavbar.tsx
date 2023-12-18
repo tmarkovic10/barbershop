@@ -10,7 +10,6 @@ const BottomNavbar = () => {
   const [active, setActive] = useState(1);
   let transition = "";
   const pathname = usePathname();
-  console.log(active);
 
   useEffect(() => {
     if (pathname === "/my-profile") {
