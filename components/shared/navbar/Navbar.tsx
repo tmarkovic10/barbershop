@@ -16,11 +16,11 @@ const Navbar = () => {
         <Image
           src={`${
             mode === "light"
-              ? "/assets/images/dama-white.png"
-              : "/assets/images/dama-black.png"
+              ? "/assets/images/dama-light.png"
+              : "/assets/images/dama-dark.png"
           }`}
-          width={33}
-          height={33}
+          width={66}
+          height={66}
           alt="Barber's"
         />
       </Link>

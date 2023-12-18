@@ -77,3 +77,9 @@ export const barbers = [
     label: "Damir",
   },
 ];
+
+export const social = [
+  { src: "/assets/icons/instagram.svg", title: "instagram" },
+  { src: "/assets/icons/email.svg", title: "email" },
+  { src: "/assets/icons/phone.svg", title: "broj" },
+];

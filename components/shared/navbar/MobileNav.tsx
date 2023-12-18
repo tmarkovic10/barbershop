@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { navLinks } from "@/constants";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
 const NavContent = () => {
   const pathname = usePathname();
@@ -49,6 +50,7 @@ const NavContent = () => {
 };
 
 const MobileNav = () => {
+  const { mode } = useTheme();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -64,17 +66,16 @@ const MobileNav = () => {
         side="left"
         className="background-light900_dark200 border-none"
       >
-        <Link href="/" className="flex-start gap-3">
-          <Image
-            src="/assets/icons/barbers-favicon.svg"
-            width={50}
-            height={50}
-            alt="Barber's"
-          />
-          <p className="h2-bold text-dark100_light900">
-            Barber<span className="text-primary-500">&apos;s</span>
-          </p>
-        </Link>
+        <Image
+          src={`${
+            mode === "light"
+              ? "/assets/images/dama-light.png"
+              : "/assets/images/dama-dark.png"
+          }`}
+          width={66}
+          height={66}
+          alt="Barber's"
+        />
         <div>
           <SheetClose asChild>
             <NavContent />
