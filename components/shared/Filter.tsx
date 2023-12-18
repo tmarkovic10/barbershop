@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { formUrlQuery, cn } from "@/lib/utils";
+import { formUrlQuery2, cn } from "@/lib/utils";
 import InputCard from "../cards/InputCard";
 import {
   Select,
@@ -29,7 +29,7 @@ const Filter = () => {
   const paramFilter = searchParams.get("filter");
 
   const handleUpdateParams = (value1: string, value2: string) => {
-    const newUrl = formUrlQuery({
+    const newUrl = formUrlQuery2({
       params: searchParams.toString(),
       key1: "employee",
       value1,

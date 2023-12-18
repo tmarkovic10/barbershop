@@ -6,7 +6,27 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-interface UrlQueryParams {
+interface UrlQueryParams1 {
+  params: string;
+  key: string;
+  value: string | null;
+}
+
+export const formUrlQuery1 = ({ params, key, value }: UrlQueryParams1) => {
+  const currentUrl = qs.parse(params);
+
+  currentUrl[key] = value;
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true }
+  );
+};
+
+interface UrlQueryParams2 {
   params: string;
   key1: string;
   value1: string | null;
@@ -14,13 +34,13 @@ interface UrlQueryParams {
   value2: string;
 }
 
-export const formUrlQuery = ({
+export const formUrlQuery2 = ({
   params,
   key1,
   value1,
   key2,
   value2,
-}: UrlQueryParams) => {
+}: UrlQueryParams2) => {
   const currentUrl = qs.parse(params);
 
   currentUrl[key1] = value1;

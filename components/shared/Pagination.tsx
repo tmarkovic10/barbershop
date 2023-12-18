@@ -2,7 +2,7 @@
 
 import { Button } from "../ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { formUrlQuery } from "@/lib/utils";
+import { formUrlQuery1 } from "@/lib/utils";
 
 interface Props {
   pageNumber: number;
@@ -17,7 +17,7 @@ const Pagination = ({ pageNumber, isNext }: Props) => {
     const nextPageNumber =
       direction === "prev" ? pageNumber - 1 : pageNumber + 1;
 
-    const newUrl = formUrlQuery({
+    const newUrl = formUrlQuery1({
       params: searchParams.toString(),
       key: "page",
       value: nextPageNumber.toString(),
