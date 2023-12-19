@@ -51,7 +51,7 @@ export default function Home() {
           src="/assets/images/barber-tools.png"
           alt="background"
           fill
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
         />
         <div className="absolute left-0 top-10 flex w-full justify-center">
           <Image
