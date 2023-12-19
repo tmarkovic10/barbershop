@@ -19,55 +19,41 @@ export default function Home() {
       })
         .to("#welcome", {
           opacity: 0,
-          y: "+=30",
           delay: 1,
         })
         .to("#intro", {
-          opacity: 0,
-          duration: 2,
-          onUpdate: () => {
-            gsap.to("#nextSlide", {
-              opacity: 1,
-            });
-          },
+          yPercent: "-100",
+          duration: 1,
         });
     }, comp);
 
     return () => ctx.revert();
   }, []);
+
   return (
-    <div
-      ref={comp}
-      className="fixed inset-x-0 bottom-0 z-10 h-screen w-full bg-black"
-    >
+    <div ref={comp} className="relative">
       <div
+        className="flex-center absolute left-0 top-0 z-10 h-screen w-full bg-black"
         id="intro"
-        className="z-10 flex h-screen place-items-center justify-center bg-black"
       >
-        <div id="welcome" className="flex-center opacity-0">
+        <div id="welcome" className="opacity-0">
           <Image
             src="/assets/images/dama-img.png"
             alt="logo"
-            height={350}
-            width={350}
+            height={400}
+            width={400}
           />
-          <h1 className="text-9xl font-bold text-gray-100">Dobrodošli</h1>
         </div>
       </div>
-      <div
-        className="h-screen opacity-0"
-        id="nextSlide"
-        style={{ marginTop: "-100vh" }}
-      >
+
+      <div id="nextSlide" className="relative h-screen w-full">
         <Image
           src="/assets/images/barber-tools.png"
-          width={1000}
-          height={1000}
-          alt="Barber tools"
-          className="h-full w-full object-cover"
+          alt="background"
+          fill
+          objectFit="cover"
         />
-
-        <div className="absolute left-1/2 top-0 mt-5 -translate-x-1/2">
+        <div className="absolute left-0 top-10 flex w-full justify-center">
           <Image
             src="/assets/images/dama-black.png"
             height={70}
@@ -75,7 +61,6 @@ export default function Home() {
             alt="Barber's logo"
           />
         </div>
-
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 text-center">
           <h1 className="h1-bold text-4xl text-white sm:text-5xl lg:text-7xl">
             We will make you stylish
