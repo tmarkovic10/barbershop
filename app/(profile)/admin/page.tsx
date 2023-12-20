@@ -36,8 +36,6 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
     searchParams.employee,
     searchParams.date
   );
-  // console.log("RESULT", result);
-  // console.log("FILTERED RESULT", filteredResult);
 
   return (
     <>

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteReservation } from "@/lib/actions/reservation.action";
 import { usePathname } from "next/navigation";
+import { isDateBeforeToday } from "@/lib/utils";
 
 interface ReservationCardProps {
   _id: string;
@@ -61,7 +62,10 @@ const ReservationCard = ({
       )}
 
       <AlertDialog>
-        <AlertDialogTrigger asChild>
+        <AlertDialogTrigger
+          asChild
+          disabled={isDateBeforeToday(format(date, "dd.MM.yyyy"))}
+        >
           <p className="absolute right-2 top-2 cursor-pointer">
             <Image
               src="/assets/icons/trash.svg"

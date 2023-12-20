@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { format, compareAsc, isToday, parse } from "date-fns";
 import qs from "query-string";
 
 export function cn(...inputs: ClassValue[]) {
@@ -61,6 +62,17 @@ export const threeMonthsFromToday = new Date(
   new Date().setMonth(new Date().getMonth() + 3)
 );
 
+export const isDateBeforeToday = (date: string) => {
+  const parts = date.split(".");
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+
+  const inputDate = new Date(year, month - 1, day);
+
+  return inputDate < today;
+};
+
 interface RemoveUrlQueryParams {
   params: string;
   keysToRemove: string[];
@@ -83,4 +95,28 @@ export const removeKeysFromQuery = ({
     },
     { skipNull: true }
   );
+};
+
+export const shouldDisableTimes = (
+  selectedDate: string,
+  selectedTime: string
+) => {
+  const now = new Date();
+  const formattedSelectedDate = parse(selectedDate, "dd/MM/yyyy", new Date());
+
+  if (isToday(formattedSelectedDate)) {
+    const currentFormattedTime = format(now, "HH:mm");
+    const selectedDateTime = parse(
+      `${selectedDate} ${selectedTime}`,
+      "dd/MM/yyyy HH:mm",
+      new Date()
+    );
+
+    return (
+      compareAsc(selectedDateTime, now) === -1 ||
+      selectedTime <= currentFormattedTime
+    );
+  }
+
+  return false;
 };

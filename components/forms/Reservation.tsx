@@ -7,7 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { cn, threeMonthsFromToday, yesterday } from "@/lib/utils";
+import {
+  cn,
+  threeMonthsFromToday,
+  yesterday,
+  shouldDisableTimes,
+} from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { useRouter, usePathname } from "next/navigation";
 import * as z from "zod";
@@ -268,6 +273,10 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
                         <SelectItem
                           value={item}
                           key={item}
+                          disabled={shouldDisableTimes(
+                            format(dateValue, "dd/MM/yyyy"),
+                            item
+                          )}
                           className="cursor-pointer hover:bg-light-800 dark:hover:bg-dark-300"
                         >
                           <div className="flex items-center gap-5">
