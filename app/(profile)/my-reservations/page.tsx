@@ -27,7 +27,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
           result.reservations.map((reservation) => (
             <ReservationCard
               key={reservation._id}
-              _id={reservation._id}
+              _id={JSON.stringify(reservation._id)}
               employee={reservation.employee}
               service={reservation.service}
               date={reservation.date}

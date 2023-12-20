@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { format } from "date-fns";
 import {
@@ -11,6 +13,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { deleteReservation } from "@/lib/actions/reservation.action";
+import { usePathname } from "next/navigation";
 
 interface ReservationCardProps {
   _id: string;
@@ -18,29 +22,36 @@ interface ReservationCardProps {
   service: string;
   date: Date;
   time: string;
-  author?: {
-    _id: string;
-    name: string;
-    picture: string;
-  };
+  authorName?: string;
+  authorImage?: string;
 }
 
 const ReservationCard = ({
+  _id,
   employee,
   service,
   date,
   time,
-  author,
+  authorName,
+  authorImage,
 }: ReservationCardProps) => {
+  const pathname = usePathname();
+
+  const handleDelete = async () => {
+    await deleteReservation({
+      reservationId: JSON.parse(_id),
+      path: pathname,
+    });
+  };
   return (
     <div className=" card-wrapper light-border relative flex w-full flex-col gap-6 rounded-[10px] border px-2 py-6 sm:max-w-[300px] sm:justify-normal">
-      {author && (
+      {authorName && (
         <div className="flex-center gap-3">
           <p className="paragraph-semibold text-dark500_light700">Gost</p>
-          <p className="text-light400_light500 capitalize">{author.name}</p>
+          <p className="text-light400_light500 capitalize">{authorName}</p>
           <div className="overflow-hidden rounded-full">
             <Image
-              src={author.picture}
+              src={authorImage!}
               height={27}
               width={27}
               alt="profile image"
@@ -75,7 +86,10 @@ const ReservationCard = ({
             <AlertDialogCancel className="text-dark500_light700">
               Odustani
             </AlertDialogCancel>
-            <AlertDialogAction className="text-dark500_light700">
+            <AlertDialogAction
+              className="text-dark500_light700"
+              onClick={handleDelete}
+            >
               Izbriši
             </AlertDialogAction>
           </AlertDialogFooter>

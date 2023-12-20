@@ -23,7 +23,7 @@ export default function Home() {
         })
         .to("#intro", {
           yPercent: "-100",
-          duration: 1,
+          duration: 0.3,
         });
     }, comp);
 

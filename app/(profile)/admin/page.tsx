@@ -36,6 +36,8 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
     searchParams.employee,
     searchParams.date
   );
+  // console.log("RESULT", result);
+  // console.log("FILTERED RESULT", filteredResult);
 
   return (
     <>
@@ -48,12 +50,13 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
               filteredResult.map((reservation) => (
                 <ReservationCard
                   key={reservation._id}
-                  _id={reservation._id}
+                  _id={JSON.stringify(reservation._id)}
                   employee={reservation.employee}
                   service={reservation.service}
                   date={reservation.date}
                   time={reservation.time}
-                  author={reservation.author}
+                  authorName={reservation.author.name}
+                  authorImage={reservation.author.picture}
                 />
               ))
             ) : (

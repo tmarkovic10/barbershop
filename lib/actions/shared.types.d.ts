@@ -40,3 +40,8 @@ export interface GetUserReservationsParams {
   pageSize?: number;
   searchQuery?: string;
 }
+
+export interface DeleteReservationParams {
+  reservationId: string;
+  path: string;
+}

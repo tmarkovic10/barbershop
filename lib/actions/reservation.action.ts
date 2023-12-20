@@ -5,6 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import {
   CreateReservationParams,
+  DeleteReservationParams,
   GetReservationsParams,
   GetUserReservationsParams,
 } from "./shared.types";
@@ -80,5 +81,19 @@ export async function getUserReservations(params: GetUserReservationsParams) {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function deleteReservation(params: DeleteReservationParams) {
+  try {
+    connectToDatabase();
+
+    const { reservationId, path } = params;
+
+    await Reservation.deleteOne({ _id: reservationId });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
   }
 }
