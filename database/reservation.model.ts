@@ -1,7 +1,6 @@
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IReservation extends Document {
-  // employee: Schema.Types.ObjectId;
   employee: string;
   service: string;
   date: Date;
@@ -11,7 +10,6 @@ export interface IReservation extends Document {
 }
 
 const ReservationSchema = new Schema({
-  // employee: { type: Schema.ObjectId, ref: "User", required: true },
   employee: { type: String, required: true },
   service: { type: String, required: true },
   date: { type: Date, required: true },

@@ -11,6 +11,8 @@ import {
 } from "./shared.types";
 import User from "@/database/user.model";
 import { FilterQuery } from "mongoose";
+import { parse, isDate, startOfDay, format } from "date-fns";
+import { today } from "../utils";
 
 export async function createReservation(params: CreateReservationParams) {
   try {
@@ -25,9 +27,6 @@ export async function createReservation(params: CreateReservationParams) {
       time,
       author,
     });
-    // await Reservation.findByIdAndUpdate(reservation._id, {
-    //   $push: { employee: { employee } },
-    // });
 
     revalidatePath(path);
   } catch (error) {
@@ -47,6 +46,49 @@ export async function getAllReservations(params: GetReservationsParams) {
       .sort({ createdAt: -1 });
 
     return { reservations };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllReservationsByDate(params: GetReservationsParams) {
+  try {
+    connectToDatabase();
+
+    const {
+      filter = format(today, "dd/MM/yyyy"),
+      page = 1,
+      pageSize = 9,
+    } = params;
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const filterDate = parse(filter, "dd/MM/yyyy", new Date());
+
+    if (!isDate(filterDate)) {
+      throw new Error("Invalid date format");
+    }
+
+    const filterDateStartOfDay = startOfDay(filterDate);
+
+    const reservations = await Reservation.find({ date: filterDateStartOfDay })
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ date: 1 })
+      .exec();
+
+    const totalReservations = await Reservation.countDocuments({
+      date: filterDateStartOfDay,
+    });
+
+    const isNext = totalReservations > skipAmount + reservations.length;
+
+    return { reservations, isNext };
   } catch (error) {
     console.log(error);
     throw error;

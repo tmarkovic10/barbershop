@@ -13,8 +13,6 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 
   const mongoUser = await getUserById({ userId });
 
-  if (mongoUser?.admin) redirect("/admin");
-
   const reservations = await getAllReservations({
     page: searchParams.page ? +searchParams.page : 1,
   });

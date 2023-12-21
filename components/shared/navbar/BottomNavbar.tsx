@@ -6,9 +6,15 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { navLinks } from "@/constants";
 
-const BottomNavbar = () => {
+interface BottomNavbarProps {
+  admin: boolean;
+}
+interface TransitionMap {
+  [key: number]: string;
+}
+
+const BottomNavbar = ({ admin }: BottomNavbarProps) => {
   const [active, setActive] = useState(1);
-  let transition = "";
   const pathname = usePathname();
 
   useEffect(() => {
@@ -18,20 +24,34 @@ const BottomNavbar = () => {
       setActive(1);
     } else if (pathname === "/my-reservations") {
       setActive(2);
+    } else if (pathname === "/admin") {
+      setActive(3);
     }
   }, [pathname, active]);
 
-  if (active === 0) {
-    transition = "-translate-x-44";
-  } else if (active === 1) {
-    transition = "-translate-x-0";
-  } else if (active === 2) {
-    transition = "translate-x-44";
-  }
+  const transitions: TransitionMap = {
+    0: !admin ? "-translate-x-44" : "-translate-x-[13.5rem]",
+    1: !admin ? "translate-x-0" : "-translate-x-[4.6rem]",
+    2: !admin ? "translate-x-44" : "translate-x-[4.3rem]",
+    3: admin ? "translate-x-[13.8rem]" : "",
+  };
+
+  const transition: string = transitions[active] || "";
+
+  const filteredNavLinks = navLinks.filter((item) => {
+    if (item.admin && !admin) {
+      return false;
+    }
+    return true;
+  });
 
   return (
-    <nav className="shadow-light100_darknone background-light900_dark200 light-border sm:flex-center fixed inset-x-0 bottom-9 mx-auto hidden max-h-[4rem] max-w-[520px] rounded-xl border">
-      <ul className="relative flex justify-around gap-[2rem]">
+    <nav className="shadow-light100_darknone background-light900_dark200 light-border sm:flex-center fixed inset-x-0 bottom-9 mx-auto hidden max-h-[4rem] max-w-[550px] rounded-xl border">
+      <ul
+        className={`relative flex justify-around ${
+          admin ? "gap-[0rem]" : "gap-[2rem]"
+        }`}
+      >
         <span
           className={`absolute ${transition} ${
             active === 0 ? "mr-2.5" : active === 2 ? "-mr-2" : ""
@@ -39,7 +59,7 @@ const BottomNavbar = () => {
             active !== undefined ? "opacity-100" : "opacity-0"
           } primary-gradient -top-5 z-[-2] h-16 w-16 rounded-full duration-700`}
         ></span>
-        {navLinks.map((item) => (
+        {filteredNavLinks.map((item) => (
           <li
             key={item.id}
             className="text-dark100_light900 body-medium m-2.5 w-32"

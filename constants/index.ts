@@ -27,18 +27,28 @@ export const navLinks = [
     label: "Moj Profil",
     icon: "/assets/icons/profile.svg",
     route: "/my-profile",
+    admin: false,
   },
   {
     id: 1,
     label: "Rezerviraj odmah",
     icon: "/assets/icons/add.svg",
     route: "/add-reservation",
+    admin: false,
   },
   {
     id: 2,
     label: "Moje Rezervacije",
     icon: "/assets/icons/list.svg",
     route: "/my-reservations",
+    admin: false,
+  },
+  {
+    id: 3,
+    label: "Admin",
+    icon: "/assets/icons/shield.svg",
+    route: "/admin",
+    admin: true,
   },
 ];
 

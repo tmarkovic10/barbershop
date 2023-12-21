@@ -65,8 +65,6 @@ export async function deleteUser(params: DeleteUserParams) {
       throw new Error("User not found");
     }
 
-    // const userReservationIds = await Reservation.find({ author: user._id }).distinct('_id');
-
     await Reservation.deleteMany({ author: user._id });
 
     const deletedUser = await User.findByIdAndDelete(user._id);

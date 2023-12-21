@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { formUrlQuery2, cn } from "@/lib/utils";
+import { formUrlQuery2, cn, today } from "@/lib/utils";
 import InputCard from "../cards/InputCard";
 import {
   Select,
@@ -23,8 +23,9 @@ const Filter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [selectedBarber, setSelectedBarber] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(today);
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+  console.log(selectedDate);
 
   const paramFilter = searchParams.get("filter");
 
@@ -39,6 +40,11 @@ const Filter = () => {
 
     router.push(newUrl, { scroll: false });
   };
+
+  useEffect(() => {
+    handleUpdateParams(selectedBarber, format(selectedDate!, "dd/MM/yyyy"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

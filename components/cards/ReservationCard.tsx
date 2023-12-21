@@ -45,7 +45,7 @@ const ReservationCard = ({
     });
   };
   return (
-    <div className=" card-wrapper light-border relative flex w-full flex-col gap-6 rounded-[10px] border px-2 py-6 sm:max-w-[300px] sm:justify-normal">
+    <div className=" card-wrapper light-border relative flex w-full flex-col gap-6 rounded-[10px] border p-6 sm:max-w-[300px] sm:justify-normal">
       {authorName && (
         <div className="flex-center gap-3">
           <p className="paragraph-semibold text-dark500_light700">Gost</p>
@@ -101,23 +101,37 @@ const ReservationCard = ({
       </AlertDialog>
 
       <div className="flex justify-around">
-        <div className="flex flex-col gap-1">
-          <p className="paragraph-semibold text-dark500_light700">Zaposlenik</p>
-          <p className="text-light400_light500 capitalize">{employee}</p>
+        <div className="flex w-[120px] flex-col gap-1">
+          <p className="paragraph-semibold text-dark500_light700 text-center">
+            Zaposlenik
+          </p>
+          <p className="text-light400_light500 text-center capitalize">
+            {employee}
+          </p>
         </div>
-        <div className="flex flex-col gap-1">
-          <p className="paragraph-semibold text-dark500_light700">Usluga</p>
-          <p className="text-light400_light500 capitalize">{service}</p>
+        <div className="flex w-[120px] flex-col gap-1">
+          <p className="paragraph-semibold text-dark500_light700 text-center">
+            Usluga
+          </p>
+          <p className="text-light400_light500 text-center capitalize">
+            {service}
+          </p>
         </div>
       </div>
       <div className="flex justify-around">
-        <div className="flex flex-col gap-1">
-          <p className="paragraph-semibold text-dark500_light700">Datum</p>
-          <p className="text-light400_light500">{format(date, "dd.MM.yyyy")}</p>
+        <div className="flex w-[120px] flex-col gap-1">
+          <p className="paragraph-semibold text-dark500_light700 text-center">
+            Datum
+          </p>
+          <p className="text-light400_light500 text-center">
+            {format(date, "dd.MM.yyyy")}
+          </p>
         </div>
-        <div className="flex flex-col gap-1">
-          <p className="paragraph-semibold text-dark500_light700">Vrijeme</p>
-          <p className="text-light400_light500">{time}</p>
+        <div className="flex w-[120px] flex-col gap-1">
+          <p className="paragraph-semibold text-dark500_light700 text-center">
+            Vrijeme
+          </p>
+          <p className="text-light400_light500 text-center">{time}</p>
         </div>
       </div>
     </div>
