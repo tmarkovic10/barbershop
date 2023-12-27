@@ -23,8 +23,6 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
     filter: searchParams.date,
   });
 
-  console.log(result);
-
   return (
     <>
       <div className="mt-9">

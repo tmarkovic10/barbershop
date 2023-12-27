@@ -65,12 +65,14 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
     const skipAmount = (page - 1) * pageSize;
 
     const filterDate = parse(filter, "dd/MM/yyyy", new Date());
+    console.log("FILTER DATE", filterDate);
 
     if (!isDate(filterDate)) {
       throw new Error("Invalid date format");
     }
 
     const filterDateStartOfDay = startOfDay(filterDate);
+    console.log("FILTER DATE START OF DAY", filterDateStartOfDay);
 
     const reservations = await Reservation.find({ date: filterDateStartOfDay })
       .populate({
