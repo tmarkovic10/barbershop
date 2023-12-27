@@ -79,8 +79,8 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
       })
       .skip(skipAmount)
       .limit(pageSize)
-      .sort({ date: 1 })
-      .exec();
+      .sort({ date: 1 });
+    console.log(reservations);
 
     const totalReservations = await Reservation.countDocuments({
       date: filterDateStartOfDay,

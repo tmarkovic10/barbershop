@@ -9,10 +9,8 @@ import NoResult from "@/components/shared/NoResult";
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const { userId: clerkId } = auth();
-  let mongoUser;
-  if (clerkId) {
-    mongoUser = await getUserById({ userId: clerkId });
-  }
+
+  const mongoUser = await getUserById({ userId: clerkId });
 
   const result = await getUserReservations({
     userId: mongoUser._id,
@@ -32,6 +30,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
               service={reservation.service}
               date={reservation.date}
               time={reservation.time}
+              admin={mongoUser.admin}
             />
           ))
         ) : (

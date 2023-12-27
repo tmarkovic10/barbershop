@@ -25,7 +25,6 @@ const Filter = () => {
   const [selectedBarber, setSelectedBarber] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(today);
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
-  console.log(selectedDate);
 
   const paramFilter = searchParams.get("filter");
 

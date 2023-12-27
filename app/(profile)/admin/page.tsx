@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { getUserById } from "@/lib/actions/user.action";
 import { getAllReservationsByDate } from "@/lib/actions/reservation.action";
 import { SearchParamsProps } from "@/types";
-// import format from "date-fns/format";
 import ReservationCard from "@/components/cards/ReservationCard";
 import NoResult from "@/components/shared/NoResult";
 import Filter from "@/components/shared/Filter";
@@ -24,6 +23,8 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
     filter: searchParams.date,
   });
 
+  console.log(result);
+
   return (
     <>
       <div className="mt-9">
@@ -41,6 +42,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
                 time={reservation.time}
                 authorName={reservation.author.name}
                 authorImage={reservation.author.picture}
+                admin={mongoUser.admin}
               />
             ))
           ) : (

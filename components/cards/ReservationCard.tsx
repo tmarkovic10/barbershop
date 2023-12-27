@@ -25,6 +25,7 @@ interface ReservationCardProps {
   time: string;
   authorName?: string;
   authorImage?: string;
+  admin?: boolean;
 }
 
 const ReservationCard = ({
@@ -35,6 +36,7 @@ const ReservationCard = ({
   time,
   authorName,
   authorImage,
+  admin,
 }: ReservationCardProps) => {
   const pathname = usePathname();
 
@@ -44,6 +46,7 @@ const ReservationCard = ({
       path: pathname,
     });
   };
+
   return (
     <div className=" card-wrapper light-border relative flex w-full flex-col gap-6 rounded-[10px] border p-6 sm:max-w-[300px] sm:justify-normal">
       {authorName && (
@@ -62,11 +65,15 @@ const ReservationCard = ({
       )}
 
       <AlertDialog>
-        <AlertDialogTrigger
-          asChild
-          disabled={isDateBeforeToday(format(date, "dd.MM.yyyy"))}
-        >
-          <p className="absolute right-2 top-2 cursor-pointer">
+        <AlertDialogTrigger asChild>
+          <button
+            className={`absolute right-2 top-2 cursor-pointer ${
+              !admin &&
+              isDateBeforeToday(format(date, "dd.MM.yyyy")) &&
+              "cursor-not-allowed"
+            }`}
+            disabled={!admin && isDateBeforeToday(format(date, "dd.MM.yyyy"))}
+          >
             <Image
               src="/assets/icons/trash.svg"
               height={20}
@@ -74,7 +81,7 @@ const ReservationCard = ({
               alt="trash"
               className="invert-colors"
             />
-          </p>
+          </button>
         </AlertDialogTrigger>
         <AlertDialogContent className="background-light900_dark200  max-w-[300px] sm:max-w-[510px]">
           <AlertDialogHeader>
