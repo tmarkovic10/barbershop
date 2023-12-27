@@ -11,7 +11,7 @@ import {
 } from "./shared.types";
 import User from "@/database/user.model";
 import { FilterQuery } from "mongoose";
-import { parse, isDate, startOfDay, format, addDays } from "date-fns";
+import { parse, isDate, startOfDay, endOfDay, format } from "date-fns";
 import { today } from "../utils";
 
 export async function createReservation(params: CreateReservationParams) {
@@ -56,8 +56,6 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
   try {
     connectToDatabase();
 
-    const nextDay = (date: Date) => addDays(date, 1);
-
     const {
       filter = format(today, "dd/MM/yyyy"),
       page = 1,
@@ -73,12 +71,12 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
     }
 
     const filterDateStartOfDay = startOfDay(filterDate);
-    console.log(filterDateStartOfDay);
+    const filterDateEndOfDay = endOfDay(filterDate);
 
     const reservations = await Reservation.find({
       date: {
         $gte: filterDateStartOfDay,
-        $lt: nextDay(filterDateStartOfDay),
+        $lt: filterDateEndOfDay,
       },
     })
       .populate({
