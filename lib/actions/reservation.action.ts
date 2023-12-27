@@ -73,6 +73,7 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
     }
 
     const filterDateStartOfDay = startOfDay(filterDate);
+    console.log(filterDateStartOfDay);
 
     const reservations = await Reservation.find({
       date: {
