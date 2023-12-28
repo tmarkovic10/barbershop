@@ -159,7 +159,9 @@ const Reservation: React.FC<Props> = ({
                           className="text-dark500_light700 cursor-pointer hover:bg-light-800 dark:hover:bg-dark-300"
                           key={barber.value}
                         >
-                          {barber.label}
+                          <p className="text-dark500_light700">
+                            {barber.label}
+                          </p>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -205,7 +207,9 @@ const Reservation: React.FC<Props> = ({
                                 className="invert-colors"
                               />
                             </div>
-                            {item.label}
+                            <p className="text-dark500_light700">
+                              {item.label}
+                            </p>
                           </div>
                         </SelectItem>
                       ))}
@@ -299,7 +303,9 @@ const Reservation: React.FC<Props> = ({
                           )}
                           className="cursor-pointer hover:bg-light-800 dark:hover:bg-dark-300"
                         >
-                          <div className="flex items-center gap-5">{item}</div>
+                          <div className="flex items-center gap-5">
+                            <p className="text-dark500_light700">{item}</p>
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
