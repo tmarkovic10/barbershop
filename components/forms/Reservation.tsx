@@ -40,6 +40,7 @@ import { availableTimes, services, barbers } from "@/constants";
 import { Button } from "../ui/button";
 import { ReservationSchema } from "@/lib/validation";
 import { createReservation } from "@/lib/actions/reservation.action";
+import emailjs from "@emailjs/browser";
 
 interface Appointment {
   date: Date;
@@ -48,10 +49,15 @@ interface Appointment {
 
 interface Props {
   mongoUserId: string;
+  userEmail: string;
   dateAndTime: Appointment[];
 }
 
-const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
+const Reservation: React.FC<Props> = ({
+  mongoUserId,
+  userEmail,
+  dateAndTime,
+}) => {
   const [availableTimesForDates, setavailableTimesForDates] =
     useState<string[]>();
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
@@ -69,6 +75,10 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
   });
   const { watch } = form;
   const dateValue = watch("date");
+
+  useEffect(() => {
+    emailjs.init(process.env.NEXT_PUBLIC_PUBLIC_KEY!);
+  }, []);
 
   useEffect(() => {
     if (dateValue) {
@@ -101,6 +111,18 @@ const Reservation: React.FC<Props> = ({ mongoUserId, dateAndTime }) => {
       });
 
       router.push("/my-reservations");
+
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_TEMPLATE_ID!,
+        {
+          to_email: userEmail,
+          employee: values.employee,
+          service: values.service,
+          date: format(values.date, "dd/MM/yyyy"),
+          time: values.time,
+        }
+      );
     } catch (error) {
       console.log(error);
     } finally {
