@@ -77,7 +77,7 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
       utcToZonedTime(filterDate, timeZone)
     );
 
-    filterDateStartOfDay.setDate(filterDateStartOfDay.getDate() + 1);
+    filterDateStartOfDay.setDate(filterDateStartOfDay.getDate() - 1);
 
     console.log(
       "Filter Date Start of Day:",
@@ -90,7 +90,7 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
       1
     );
 
-    filterDateEndOfNextDay.setDate(filterDateEndOfNextDay.getDate() + 1);
+    filterDateEndOfNextDay.setDate(filterDateEndOfNextDay.getDate() - 1);
 
     console.log(
       "Filter Date End of Next Day:",
