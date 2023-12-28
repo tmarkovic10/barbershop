@@ -11,7 +11,8 @@ import {
 } from "./shared.types";
 import User from "@/database/user.model";
 import { FilterQuery } from "mongoose";
-import { parse, isDate, format } from "date-fns";
+import { parse, isDate, format, startOfDay, addDays } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 import { today } from "../utils";
 
 export async function createReservation(params: CreateReservationParams) {
@@ -70,17 +71,31 @@ export async function getAllReservationsByDate(params: GetReservationsParams) {
       throw new Error("Invalid date format");
     }
 
-    const filterDateStartOfDay = new Date(filterDate);
-    filterDateStartOfDay.setDate(filterDateStartOfDay.getDate() - 1);
-    console.log("filterDateStartOfDay", filterDateStartOfDay);
+    const timeZone = "Europe/Zagreb"; // replace 'yourTimeZone' with the actual time zone
 
-    const filterDateEndOfNextDay = new Date(filterDateStartOfDay);
-    filterDateEndOfNextDay.setDate(filterDateEndOfNextDay.getDate() + 2);
-    console.log("filterDateEndOfNextDay", filterDateEndOfNextDay);
+    const filterDateStartOfDay = startOfDay(
+      utcToZonedTime(filterDate, timeZone)
+    );
+
+    console.log(
+      "Filter Date Start of Day:",
+      filterDateStartOfDay.toISOString()
+    );
+
+    // Calculate the end of the next day (24 hours later) in the specified time zone
+    const filterDateEndOfNextDay = addDays(
+      utcToZonedTime(filterDate, timeZone),
+      1
+    );
+
+    console.log(
+      "Filter Date End of Next Day:",
+      filterDateEndOfNextDay.toISOString()
+    );
 
     const reservations = await Reservation.find({
       date: {
-        $gt: filterDateStartOfDay,
+        $gte: filterDateStartOfDay,
         $lt: filterDateEndOfNextDay,
       },
     })
