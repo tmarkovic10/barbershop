@@ -12,12 +12,23 @@ import { navLinks } from "@/constants";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
 
-const NavContent = () => {
+interface MobileNavProps {
+  admin: boolean;
+}
+
+const NavContent = ({ admin }: MobileNavProps) => {
   const pathname = usePathname();
+
+  const filteredNavLinks = navLinks.filter((item) => {
+    if (item.admin && !admin) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <section className="flex h-full flex-col gap-6 pt-16">
-      {navLinks.map((item) => {
+      {filteredNavLinks.map((item) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;
@@ -49,7 +60,7 @@ const NavContent = () => {
   );
 };
 
-const MobileNav = () => {
+const MobileNav = ({ admin }: MobileNavProps) => {
   const { mode } = useTheme();
   return (
     <Sheet>
@@ -78,7 +89,7 @@ const MobileNav = () => {
         />
         <div>
           <SheetClose asChild>
-            <NavContent />
+            <NavContent admin={admin} />
           </SheetClose>
         </div>
       </SheetContent>

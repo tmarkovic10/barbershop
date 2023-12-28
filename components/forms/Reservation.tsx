@@ -205,9 +205,7 @@ const Reservation: React.FC<Props> = ({
                                 className="invert-colors"
                               />
                             </div>
-                            <p className="text-dark500_light700">
-                              {item.label}
-                            </p>
+                            {item.label}
                           </div>
                         </SelectItem>
                       ))}
@@ -301,9 +299,7 @@ const Reservation: React.FC<Props> = ({
                           )}
                           className="cursor-pointer hover:bg-light-800 dark:hover:bg-dark-300"
                         >
-                          <div className="flex items-center gap-5">
-                            <p className="text-dark500_light700">{item}</p>
-                          </div>
+                          <div className="flex items-center gap-5">{item}</div>
                         </SelectItem>
                       ))}
                     </SelectContent>

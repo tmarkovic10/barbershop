@@ -20,10 +20,11 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: `Barber's`,
-  description: `"Elevate your grooming experience with Barber's - your go-to destination for precision cuts, grooming, and relaxation. Explore our app for convenient booking, expert services, and a modern barbershop journey like no other."`,
+  title: "Barbershop Dama",
+  description:
+    "Salon za šišanje i uređivanje brade, naš frizerski salon nudi vrhunsku uslugu podrezivanja kose i oblikovanja brade. S iskusnim frizerima, udobnim stolicama i opuštajućom atmosferom, naš barbershop pruža izvrsno iskustvo za muškarce koji žele njegovani izgled. Posjetite nas kako biste doživjeli vrhunsku brigu o vašem izgledu i uživali u autentičnom barber-shop ambijentu.",
   icons: {
-    icon: "",
+    icon: "/assets/images/dama-light.png",
   },
 };
 

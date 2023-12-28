@@ -8,7 +8,11 @@ import React from "react";
 import Theme from "./Theme";
 import MobileNav from "./MobileNav";
 
-const Navbar = () => {
+interface NavbarProps {
+  admin: boolean;
+}
+
+const Navbar = ({ admin }: NavbarProps) => {
   const { mode } = useTheme();
   return (
     <nav className="flex-between background-light900_dark200 fixed z-50 flex w-full p-6 shadow-light-300 dark:shadow-none sm:px-12">
@@ -41,7 +45,7 @@ const Navbar = () => {
           />
         </SignedIn>
 
-        <MobileNav />
+        <MobileNav admin={admin} />
       </div>
     </nav>
   );
