@@ -237,7 +237,7 @@ const Reservation: React.FC<Props> = ({
                       <FormControl className="paragraph-regular text-dark500_light700">
                         <Button
                           className={cn(
-                            "w-full paragraph-regular text-light400_light500 min-h-[48px] light-border border background-light800_dark300 px-5 py-2.5",
+                            "w-full paragraph-regular text-dark500_light700 min-h-[48px] light-border border background-light800_dark300 px-5 py-2.5",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -245,7 +245,7 @@ const Reservation: React.FC<Props> = ({
                             format(field.value, "dd/MM/yyyy")
                           ) : (
                             <span className="body-regular light-border background-light800_dark300 text-light400_light500 min-h-[48px] border py-2.5">
-                              Odaberite datum
+                              Datum
                             </span>
                           )}
                           <CalendarIcon className="text-light400_light500 ml-auto h-4 w-4 opacity-50" />
