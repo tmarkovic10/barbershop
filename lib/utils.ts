@@ -68,7 +68,7 @@ export const isDateBeforeToday = (date: string) => {
   const month = parseInt(parts[1], 10);
   const year = parseInt(parts[2], 10);
 
-  const inputDate = new Date(year, month - 1, day);
+  const inputDate = new Date(year, month - 1, day + 1);
 
   return inputDate < today;
 };

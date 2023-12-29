@@ -67,10 +67,10 @@ const ReservationCard = ({
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <button
-            className={`absolute right-2 top-2 cursor-pointer ${
-              !admin &&
-              isDateBeforeToday(format(date, "dd.MM.yyyy")) &&
-              "cursor-not-allowed"
+            className={`absolute right-2 top-2 ${
+              !admin && isDateBeforeToday(format(date, "dd.MM.yyyy"))
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
             }`}
             disabled={!admin && isDateBeforeToday(format(date, "dd.MM.yyyy"))}
           >
