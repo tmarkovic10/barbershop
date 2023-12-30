@@ -28,6 +28,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
         <Reservation
           mongoUserId={JSON.stringify(mongoUser?._id)}
           userEmail={mongoUser?.email}
+          userName={mongoUser?.name}
           dateAndTime={dateAndTime}
         />
       </div>

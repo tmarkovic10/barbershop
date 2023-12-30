@@ -50,12 +50,14 @@ interface Appointment {
 interface Props {
   mongoUserId: string;
   userEmail: string;
+  userName: string;
   dateAndTime: Appointment[];
 }
 
 const Reservation: React.FC<Props> = ({
   mongoUserId,
   userEmail,
+  userName,
   dateAndTime,
 }) => {
   const [availableTimesForDates, setavailableTimesForDates] =
@@ -117,6 +119,8 @@ const Reservation: React.FC<Props> = ({
         process.env.NEXT_PUBLIC_TEMPLATE_ID!,
         {
           to_email: userEmail,
+          me_email: "damirmarkovic94@gmail.com",
+          name: userName,
           employee: values.employee,
           service: values.service,
           date: format(values.date, "dd/MM/yyyy"),
