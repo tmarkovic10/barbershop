@@ -114,19 +114,22 @@ const Reservation: React.FC<Props> = ({
 
       router.push("/my-reservations");
 
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID!,
-        {
-          to_email: userEmail,
-          me_email: "damirmarkovic94@gmail.com",
-          name: userName,
-          employee: values.employee,
-          service: values.service,
-          date: format(values.date, "dd/MM/yyyy"),
-          time: values.time,
-        }
-      );
+      const emailAaddresses = [userEmail, "damirmarkovic95@gmail.com"];
+
+      emailAaddresses.forEach(async (toEmail) => {
+        await emailjs.send(
+          process.env.NEXT_PUBLIC_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_TEMPLATE_ID!,
+          {
+            to_email: toEmail,
+            name: userName,
+            employee: values.employee,
+            service: values.service,
+            date: format(values.date, "dd/MM/yyyy"),
+            time: values.time,
+          }
+        );
+      });
     } catch (error) {
       console.log(error);
     } finally {
